@@ -1,6 +1,12 @@
 const {mongoose} = require('../db/mongoose')
 
 var patientSchema = mongoose.Schema({
+    patientId: {
+        type: String,
+        minlength: 1,
+        required: true,
+        trim: true,
+    },
     name: {
         type: String,
         minlength: 1,
@@ -117,6 +123,10 @@ var patientSchema = mongoose.Schema({
     hospital: {
         type: String,
         minlength: 1,
+        trim: true,
+    },
+    linkedWith: {
+        type: String,
         trim: true,
     },
     resultCluster: {

@@ -1,6 +1,12 @@
 const {mongoose} = require('../db/mongoose')
 
 var donorSchema = mongoose.Schema({
+    donorId: {
+        type: String,
+        minlength: 1,
+        required: true,
+        trim: true,
+    },
     name: {
         type: String,
         minlength: 1,
@@ -136,6 +142,9 @@ var donorSchema = mongoose.Schema({
     resultCluster: {
         type: String,
         minlength: 1,
+    },
+    booked: {
+        type: Boolean
     },
     insertedDate: {
         type: Date,

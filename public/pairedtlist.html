@@ -66,16 +66,12 @@
 	<div class="colorlib-loader"></div>
 
     <div class="container">
-		<h1 style="margin-top: 50px; margin-bottom: 30px;"><a href="/index.html" style="color: black; text-decoration: none;">Dashboard</a> / Patient List</h1>
+		<h1 style="margin-top: 50px; margin-bottom: 30px;"><a href="/index.html" style="color: black; text-decoration: none;">Dashboard</a> / Paired List</h1>
         <table id="example" class="mdl-data-table hover" style="width:100%">
             <thead>
                 <tr>
                     <th>Patient Id</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Blood Group</th>
-                    <th>Registered Date</th>
+                    <th>Donor Id</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -89,38 +85,24 @@
         $(".colorlib-loader").css("display", "block");
         $.ajax({
             method: "POST",
-            url: '/get_patient_list',
+            url: '/get_paired_list',
             success: function(data){
-                data["doc"].forEach(data => {
+                data.donorRecords.forEach(data => {
                     const tr = document.createElement('tr');
 
-                    const id = document.createElement('td');
-                    const anchor = document.createElement('a');
-                    anchor.setAttribute('href', `get_patient_details/${data["_id"]}`);
-                    anchor.textContent = data["patientId"];
-                    id.appendChild(anchor);
-                    tr.appendChild(id);
+                    const patientId = document.createElement('td');
+                    const patientAnchor = document.createElement('a');
+                    patientAnchor.setAttribute('href', `get_patient_details/${data.patientDbId}`);
+                    patientAnchor.textContent = data.patientId;
+                    patientId.appendChild(patientAnchor);
+                    tr.appendChild(patientId);
                     
-                    const name = document.createElement('td');
-                    name.textContent = data["name"];
-                    tr.appendChild(name);
-                                        
-                    const age = document.createElement('td');
-                    age.textContent = data["age"];
-                    tr.appendChild(age);
-                    
-                    const address = document.createElement('td');
-                    address.textContent = data["address"];
-                    tr.appendChild(address);
-
-                    const bloodGroup = document.createElement('td');
-                    bloodGroup.textContent = data["bloodGroup"];
-                    tr.appendChild(bloodGroup);
-
-                    const insertedDate = document.createElement('td');
-                    date = new Date(data["insertedDate"]);
-                    insertedDate.textContent = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}` 
-                    tr.appendChild(insertedDate);
+                    const donorId = document.createElement('td');
+                    const donorAnchor = document.createElement('a');
+                    donorAnchor.setAttribute('href', `get_donor_details/${data.donorDbId}`);
+                    donorAnchor.textContent = data.donorId;
+                    donorId.appendChild(donorAnchor);
+                    tr.appendChild(donorId);
 
                     $("#tableBody").append(tr);
                 });

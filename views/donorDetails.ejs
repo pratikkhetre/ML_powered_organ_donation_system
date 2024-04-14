@@ -73,9 +73,13 @@
 
 		<form method="POST" action="/register_patient" id="donor_form">
 			<div class="row form-group">
-				<div class="col-md-12">
+				<div class="col-md-8">
 					<label for="fname">Name*</label>
 					<input disabled type="text" id="fname" name="fname" class="form-control" value="<%= document.name %>" required>
+				</div>
+				<div class="col-md-4">
+					<label for="donorId">Donor Id*</label>
+					<input disabled type="text" id="donorId" name="donorId" class="form-control" value="<%= document.donorId %>" required>
 				</div>
 			</div>
 

@@ -67,10 +67,10 @@
 
     <div class="container">
 		<h1 style="margin-top: 50px; margin-bottom: 30px;"><a href="/index.html" style="color: black; text-decoration: none;">Dashboard</a> / Donors List</h1>
-        <table id="example" class="display" style="width:100%">
+        <table id="example" class="mdl-data-table hover" style="width:100%">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Donor Id</th>
                     <th>Name</th>
                     <th>Age</th>
                     <th>Address</th>
@@ -97,7 +97,7 @@
                     const id = document.createElement('td');
                     const anchor = document.createElement('a');
                     anchor.setAttribute('href', `get_donor_details/${data["_id"]}`);
-                    anchor.textContent = data["_id"];
+                    anchor.textContent = data["donorId"];
                     id.appendChild(anchor);
                     tr.appendChild(id);
                     

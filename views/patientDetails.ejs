@@ -67,16 +67,23 @@
 	<body>
 		
 	<div class="colorlib-loader"></div>
+	
+	<div class="alert-primary d-flex align-items-center alert" >
+		<div class="alert" id="alertMessage"></div>
+	</div>
 
 	<div class="container">
 				  
-		<h1 style="margin-top: 50px; margin-bottom: 30px;"><a href="/index.html" style="color: black; text-decoration: none;">Dashboard</a> / <a href="/donorlist.html" style="color: black; text-decoration: none;">Donor List</a> / Donor Details</h1>
-
+		<h1 style="margin-top: 50px; margin-bottom: 30px;"><a href="/index.html" style="color: black; text-decoration: none;">Dashboard</a> / <a href="/patientlist.html" style="color: black; text-decoration: none;">Patient List</a> / Patient Details</h1>
 		<form method="POST" action="/register_patient" id="donor_form">
 			<div class="row form-group">
-				<div class="col-md-12">
+				<div class="col-md-8">
 					<label for="fname">Name*</label>
 					<input disabled type="text" id="fname" name="fname" class="form-control" value="<%= document.name %>" required>
+				</div>
+				<div class="col-md-4">
+					<label for="patientId">Patient Id*</label>
+					<input disabled type="text" id="patientId" name="patientId" class="form-control" value="<%= document.patientId %>" required>
 				</div>
 			</div>
 
@@ -158,27 +165,19 @@
 			</div>
 
 			<div class="row form-group">
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="bloodGroup">BloodGroup*</label>
 					<input disabled name="physicianContact" id="physicianContact" value="<%= document.bloodGroup %>" class="form-control"></input>
 				</div>
-				<div class="col-md-2">
-					<label for="heartRate">Heart Rate*</label>
-					<input disabled type="number" id="heartRate" name="heartRate" class="form-control" value="<%= document.heartRate %>" required>
-				</div>
-                <div class="col-md-2">
-					<label for="respiratoryRate">Respiratory Rate*</label>
-					<input disabled type="number" id="respiratoryRate" name="respiratoryRate" class="form-control" value="<%= document.respiratoryRate %>" required>
-				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="scr">sCr*</label>
 					<input disabled type="number" id="scr" name="scr" class="form-control" value="<%= document.sCr %>" required>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="egfr">eGFR*</label>
 					<input disabled type="number" id="egfr" name="egfr" class="form-control" value="<%= document.eGFR %>" required>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="hba1c">HbA1c*</label>
 					<input disabled type="number" id="hba1c" name="hba1c" class="form-control" value="<%= document.HbA1c %>" required>
 				</div>
@@ -192,25 +191,28 @@
 			</div>
 		</form>
 
-		<h1 style="margin-top: 50px; margin-bottom: 30px;">Matched Donor List</h1>
+		<h1 id="h1Title" style="margin-top: 50px; margin-bottom: 30px;">Matched Donor List</h1>
+		<span id="alreadyPairedDetail" style="display: none;"></span>
         <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Donor Id</th>
                     <th>Name</th>
                     <th>Age</th>
                     <th>Address</th>
                     <th>Blood Group</th>
                     <th>Registered Date</th>
+                    <th>Mark as selected</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
             </tbody>
         </table>
 	</div>
-    <pre style="display: none;" id="donersInfo">
-        <%= document.donorsList %>
-    </pre>
+	<input type="hidden" id="patientDbId" value="<%= document._id %>">
+    <pre style="display: none;" id="donersInfo"><%= document.donorsList %></pre>
+	<input type="hidden" id="isPaired" value="<%= document.linkedWithId %>">
+	<input type="hidden" id="linkedDonerUserId" value="<%= document.linkedWithUserId %>">
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
@@ -239,42 +241,94 @@
 	<script src="js/main.js"></script>
 
     <script defer>
-        const donersData = JSON.parse(document.getElementById("donersInfo").innerText)
-        console.log(donersData)
-        donersData.forEach(data => {
-            const tr = document.createElement('tr');
+		$(document).ready(function () {
+			$(".alert").css("display", "none")
+		});
 
-            const id = document.createElement('td');
-            const anchor = document.createElement('a');
-            anchor.setAttribute('href', `get_donor_details/${data["_id"]}`);
-            anchor.textContent = data["_id"];
-            id.appendChild(anchor);
-            tr.appendChild(id);
-            
-            const name = document.createElement('td');
-            name.textContent = data["name"];
-            tr.appendChild(name);
-                                
-            const age = document.createElement('td');
-            age.textContent = data["age"];
-            tr.appendChild(age);
-            
-            const address = document.createElement('td');
-            address.textContent = data["address"];
-            tr.appendChild(address);
+		const alreadyPaired = document.getElementById("isPaired").value
+		if(alreadyPaired == ""){
+			const donersData = JSON.parse(document.getElementById("donersInfo").innerText)
+			const patientDbId = document.getElementById("patientDbId").value
+			donersData.forEach(data => {
+				const tr = document.createElement('tr');
 
-            const bloodGroup = document.createElement('td');
-            bloodGroup.textContent = data["bloodGroup"];
-            tr.appendChild(bloodGroup);
+				const id = document.createElement('td');
+				const anchor = document.createElement('a');
+				anchor.setAttribute('href', `get_donor_details/${data["_id"]}`);
+				anchor.textContent = data["donorId"];
+				id.appendChild(anchor);
+				tr.appendChild(id);
+				
+				const name = document.createElement('td');
+				name.textContent = data["name"];
+				tr.appendChild(name);
+									
+				const age = document.createElement('td');
+				age.textContent = data["age"];
+				tr.appendChild(age);
+				
+				const address = document.createElement('td');
+				address.textContent = data["address"];
+				tr.appendChild(address);
 
-            const insertedDate = document.createElement('td');
-            date = new Date(data["insertedDate"]);
-            insertedDate.textContent = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}` 
-            tr.appendChild(insertedDate);
+				const bloodGroup = document.createElement('td');
+				bloodGroup.textContent = data["bloodGroup"];
+				tr.appendChild(bloodGroup);
 
-            $("#tableBody").append(tr);
-        });
-        new DataTable('#example');
+				const insertedDate = document.createElement('td');
+				date = new Date(data["insertedDate"]);
+				insertedDate.textContent = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}` 
+				tr.appendChild(insertedDate);
+
+				const pairedId = document.createElement('td');
+				const pairedIdAnchor = document.createElement('a');
+				pairedIdAnchor.setAttribute('href', `pair_donor/${patientDbId}/${data["_id"]}`);
+				pairedIdAnchor.textContent = "Select";
+				pairedIdAnchor.name = "link";
+				pairedId.appendChild(pairedIdAnchor);
+				tr.appendChild(pairedId);
+
+				$("#tableBody").append(tr);
+			});
+			new DataTable('#example');
+		} else{
+			const linkedDonerUserId = document.getElementById("linkedDonerUserId").value
+			$("#example").css("display", "none");
+			$("#alreadyPairedDetail").css("display", "block");
+			$("#alreadyPairedDetail").html(`<h2>Patient already paired with donor id : <a href='/get_donor_details/${alreadyPaired}'>${linkedDonerUserId}</a><h2>`)
+			$("#h1Title").text('Matched Donor Details :')
+
+		}
+
+		$('a[name="link"]').on('click', function(event) {
+			event.preventDefault();
+			$(".colorlib-loader").css("display", "block");
+			$.ajax({
+				method: "POST",
+				url: `${this.pathname}`,
+				success: function(data){
+					if (data.status == "success") {
+						$("#example_wrapper").css("display", "none");
+						$("#h1Title").text('Matched Donor Details :')
+						$("#alreadyPairedDetail").css("display", "block");
+						linkedDonerUserId = document.querySelector(`a[href="get_donor_details/${data.linkedWith}"]`).innerText;
+						$("#alreadyPairedDetail").html(`<h2>Patient paired with donor id : <a href='/get_donor_details/${data.linkedWith}'>${linkedDonerUserId}</a><h2>`)
+					}
+
+					$(".colorlib-loader").css("display", "none");
+					$("#alertMessage").text(data.msg);
+					$(".alert").css("display", "flex")
+					$('html, body').scrollTop(0);
+					
+					setTimeout(function(){
+						$(".alert").css("display", "none")
+					}, 7000);
+				},
+				error: function(e){
+					$(".colorlib-loader").css("display", "none");
+				}
+			})
+		});
     </script>
 	</body>
 </html>
