@@ -65,12 +65,6 @@ var donorSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
-    immunizationRecord: {
-        type: String,
-        maxlength: 750,
-        required: true,
-        trim: true,
-    },
     physicianName: {
         type: String,
         minlength: 1,

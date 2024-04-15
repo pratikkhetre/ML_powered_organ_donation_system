@@ -65,18 +65,6 @@ var patientSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
-    immunizationRecord: {
-        type: String,
-        maxlength: 750,
-        required: true,
-        trim: true,
-    },
-    insurence: {
-        type: String,
-        maxlength: 750,
-        required: true,
-        trim: true,
-    },
     physicianName: {
         type: String,
         minlength: 1,

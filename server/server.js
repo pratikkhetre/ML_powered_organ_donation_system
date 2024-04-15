@@ -20,7 +20,7 @@ app.get('/', (req, res, next) => {
 app.post('/register_patient', async(req, res, next) => {
     var body = req.body
     if (body.patientId && body.fname && body.lname && body.age && body.gender && body.language && body.phone && body.emergencyContact && body.address && body.medicalHistory &&
-        body.familyHistory && body.medications && body.immunizationRecord && body.insurence && body.bloodGroup && body.scr && body.egfr && body.hba1c && body.hospital) {
+        body.familyHistory && body.medications && body.bloodGroup && body.scr && body.egfr && body.hba1c && body.hospital) {
 
         Patient.find( {patientId: body.patientId }, (err, document) => {
             if (err) {
@@ -61,8 +61,6 @@ app.post('/register_patient', async(req, res, next) => {
                 medicalHistory: body.medicalHistory,
                 familyHistory: body.familyHistory,
                 currentMedication: body.medications,
-                immunizationRecord: body.immunizationRecord,
-                insurence: body.insurence,
                 physicianName: body.physicianName,
                 physicianContact: body.physicianContact,
                 bloodGroup: body.bloodGroup,
@@ -97,7 +95,7 @@ app.post('/register_patient', async(req, res, next) => {
 app.post('/register_donor', (req, res, next) => {
     var body = req.body
     if (body.donorId && body.fname && body.lname && body.age && body.gender && body.language && body.phone && body.emergencyContact && body.address && body.medicalHistory &&
-        body.familyHistory && body.medications && body.immunizationRecord && body.bloodGroup && body.scr && body.egfr && body.hba1c && body.bloodCellCount &&
+        body.familyHistory && body.medications && body.bloodGroup && body.scr && body.egfr && body.hba1c && body.bloodCellCount &&
         body.diabetesMillitus && body.hemoglobin && body.pusCell && body.albunimDisorderSeverity && body.appet && body.hospital) {
                 
         Donor.find( {donorId: body.donorId }, (err, document) => {
@@ -158,7 +156,6 @@ app.post('/register_donor', (req, res, next) => {
                         medicalHistory: body.medicalHistory,
                         familyHistory: body.familyHistory,
                         currentMedication: body.medications,
-                        immunizationRecord: body.immunizationRecord,
                         physicianName: body.physicianName,
                         physicianContact: body.physicianContact,
                         bloodGroup: body.bloodGroup,
