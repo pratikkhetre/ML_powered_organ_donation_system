@@ -1,210 +1,115 @@
-<!DOCTYPE HTML>
-<html>
-
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Organ Donation</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ORGAN DONATION</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="" />
-	<meta property="og:image" content="" />
-	<meta property="og:url" content="" />
-	<meta property="og:site_name" content="" />
-	<meta property="og:description" content="" />
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="css/magnific-popup.css">
-
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="css/flexslider.css">
-
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    
+    <style>
+        .colorlib-loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url(../images/loader.gif) center no-repeat #fff; 
+        }
+    </style>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 </head>
+<body class="bg-dark">
+	
+    <div class="colorlib-loader"></div>
+    <div id="alertMessage" class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+    </div>
 
-<body>
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <a href="index.html">
+                        <img class="align-content" style="height: 125px;" src="images/logo-main.png" alt="">
+                    </a>
+                </div>
+                <div class="login-form">
+                    <form method="post" id="login_form">
+                        <div class="form-group">
+                            <label>Login Id</label>
+                            <input type="userid" id="userid" name="userid" class="form-control" placeholder="userid">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                        </div>
 
-	<div class="colorlib-loader"></div>
+                        <button type="submit" id="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div id="page">
-		<aside id="colorlib-hero">
-			<div class="flexslider">
-				<ul class="slides">
-					<li style="background-image: url(images/back.png);">
-						<div class="overlay"></div>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
-									<div class="slider-text-inner text-center">
-										<h1>Smart Organ Donation</h1>
-										<a class="btn btn-primary btn-demo" href="/donor.html"></i> Register Donor</a>
-										<a class="btn btn-primary btn-learn" href="/patient.html">Register Patient</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li style="background-image: url(images/back2.png);">
-						<div class="overlay"></div>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
-									<div class="slider-text-inner text-center">
-										<h2>SAFE&amp; SAVE</h2>
-										<h1>YOUR TIME IS OUR PRIORITY</h1>
-										<a class="btn btn-primary btn-demo" href="/donor.html"></i> Register Donor<a>
-										<a class="btn btn-primary btn-learn" href="/patient.html">Register Patient</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li style="background-image: url(images/back3.jpg);">
-						<div class="overlay"></div>
-						<div class="container-fluids">
-							<div class="row">
-								<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
-									<div class="slider-text-inner text-center">
-										<h1>We know how to serve you</h1>
-										<a class="btn btn-primary btn-demo" href="/donor.html"></i> Register Donor</a> 
-										<a class="btn btn-primary btn-learn" href="/patient.html">Register Patient</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li style="background-image: url(images/back4.jpg);">
-						<div class="overlay"></div>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
-									<div class="slider-text-inner text-center">
-										<!-- <h2>Come &amp; enjoy the unforgetable nights</h2> -->
-										<h1>Everything in your hands</h1>
-										<a class="btn btn-primary btn-demo" href="/donor.html"></i> Register Donor</a> 
-										<a class="btn btn-primary btn-learn" href="/patient.html">Register Patient</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</aside>
-		<div id="colorlib-reservation">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 search-wrap">
-						<form method="post" class="colorlib-form" action="/search">
-							<div class="col-md-12" style="display: flex; justify-content: center;">
-								<a class="d-flex btn btn-info btn-demo p-2 flex-fill" href="/donorlist.html"></i> View Donors List</a> 
-								<a class="d-flex btn btn-info btn-demo" href="/patientlist.html"></i> View Patients List</a> 
-								<a class="d-flex btn btn-info btn-demo" href="/pairedtlist.html"></i> View Paired List</a> 
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div id="colorlib-services">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-3 animate-box text-center">
-						<div class="services">
-							<span class="icon">
-								<i class="flaticon-reception"></i>
-							</span>
-							<h3>24/7 Front Desk</h3>
-							<p>Available on the go services 24X7 to avoid any emergency crisis.</p>
-						</div>
-					</div>
-					<div class="col-md-3 animate-box text-center">
-						<div class="services">
-							<span class="icon">
-								<i class="flaticon-herbs"></i>
-							</span>
-							<h3>More accurate System </h3>
-							<p>Smartly designed algorithm system to increase the accuracy and efficiency of the Web APP
-							</p>
-						</div>
-					</div>
-					<div class="col-md-3 animate-box text-center">
-						<div class="services">
-							<span class="icon">
-								<i class="flaticon-car"></i>
-							</span>
-							<h3>Speedy Service</h3>
-							<p>We ensure fast and responsive services to the user because your life is what matters!!!</p>
-						</div>
-					</div>
-					<div class="col-md-3 animate-box text-center">
-						<div class="services">
-							<span class="icon">
-								<i class="flaticon-cheers"></i>
-							</span>
-							<h3> Health &amp; Wealth </h3>
-							<p> Without health there is no happiness, no peace and no success and that's where Lifesaver
-								plays a crucial role </p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-</body>
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+	<script src="assets/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Flexslider -->
-	<script src="js/jquery.flexslider-min.js"></script>
-	<!-- Owl carousel -->
-	<script src="js/owl.carousel.min.js"></script>
-	<!-- Magnific Popup -->
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/magnific-popup-options.js"></script>
-	<!-- Date Picker -->
-	<script src="js/bootstrap-datepicker.js"></script>
-	<!-- Main -->
-	<script src="js/main.js"></script>
+	<script src="assets/js/jquery.easing.1.3.js"></script>
+    
+    <script defer>	
+    	$(document).ready(function () {
+			$(".alert").css("display", "none")
+			$(".colorlib-loader").css("display", "none");
+		});
+
+		$('#submit').click(function(event){
+            event.preventDefault()
+			$(".colorlib-loader").css("display", "block");
+            $.ajax({
+                method: "POST",
+                url: '/login',
+                data: $('#login_form').serialize(),
+                success: function(data){
+                    if (data.msg == "success") {
+                        window.location.href = "http://localhost:3000/pairedRecords.html"
+            			$(".colorlib-loader").css("display", "none");
+                    }
+                },
+                error: function(e){
+                    $(".colorlib-loader").css("display", "none");
+                    $(".alert").css("display", "block")
+					$("#alertMessage").text(e.responseText);
+                    
+                    setTimeout(function(){
+						$(".alert").css("display", "none")
+					}, 7000);
+                    console.log(e.responseText)
+                }
+            })
+        })
+    </script>
+    
+</body>
 </html>

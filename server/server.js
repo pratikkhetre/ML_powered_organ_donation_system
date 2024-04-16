@@ -2,6 +2,7 @@ const express = require('express')
 const body_parser = require('body-parser')
 const { Patient } = require('./models/patient')
 const { Donor } = require('./models/donor')
+const { Users } = require('./models/users')
 const axios = require('axios')
 var app = express()
 
@@ -17,6 +18,29 @@ app.get('/', (req, res, next) => {
     return
 })
 
+app.post('/login', async(req, res, next) => {
+    Users.find({loginId : req.body.userid}, (err, document) => {
+        if (err) {
+            console.error(err);
+        } else {
+            if (document) {
+                if (document[0]._doc.password == req.body.password) {
+                    res.status(200).send({"msg":"success"})
+                    return
+                }else{
+                    res.status(400).send("Wrong Login Id or Password")
+                    return
+                } 
+           } else {
+                console.log("not found")
+                res.status(400).send("Wrong Login Id or Password")
+                return
+            }
+        }
+    })
+})
+
+
 app.post('/register_patient', async(req, res, next) => {
     var body = req.body
     if (body.patientId && body.fname && body.lname && body.age && body.gender && body.language && body.phone && body.emergencyContact && body.address && body.medicalHistory &&
@@ -28,64 +52,63 @@ app.post('/register_patient', async(req, res, next) => {
             } else {
                 if (document.length > 0) {
                     res.status(400).send('Patient Id already exists. Please try using different id')
-                    return
+                }else{
+                    var options = {
+                        method: 'POST',
+                        url: 'http://organdonation.pythonanywhere.com/getOrganCluster',
+                        headers: {
+                            Accept: '*/*',
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            scr: body.scr,
+                            egfr: body.egfr,
+                            hba1c: body.hba1c
+                        }
+                    };
+            
+                    axios.request(options).then(function(response) {
+                        var newpatient = new Patient({
+                            patientId: body.patientId,
+                            name: body.fname + " " + body.lname,
+                            age: body.age,
+                            gender: body.gender,
+                            prefered_language: body.language,
+                            email: body.email,
+                            phoneNo: body.phone,
+                            emergencyPhoneNo: body.emergencyContact,
+                            address: body.address,
+                            medicalHistory: body.medicalHistory,
+                            familyHistory: body.familyHistory,
+                            currentMedication: body.medications,
+                            physicianName: body.physicianName,
+                            physicianContact: body.physicianContact,
+                            bloodGroup: body.bloodGroup,
+                            heartRate: body.heartRate,
+                            respiratoryRate: body.respiratoryRate,
+                            sCr: body.scr,
+                            eGFR: body.egfr,
+                            HbA1c: body.hba1c,
+                            linkedWith: "",
+                            hospital: body.hospital,
+                            resultCluster: response.data
+                        })
+            
+                        newpatient.save().then((doc) => {
+                            pid = doc._id;
+                            res.status(200).send({ "msg": "Patient Registered Successfully", pid })
+                            return
+                        }).catch((e) => {
+                            res.status(400).send('Error while saving record')
+                            return
+                        })
+                    }).catch(function(error) {
+                        res.status(400).send('Unexpected error occured! Please try again')
+                        return
+                    });
                 }
             }
         })
-
-        var options = {
-            method: 'POST',
-            url: 'http://organdonation.pythonanywhere.com/getOrganCluster',
-            headers: {
-                Accept: '*/*',
-                'Content-Type': 'application/json'
-            },
-            data: {
-                scr: body.scr,
-                egfr: body.egfr,
-                hba1c: body.hba1c
-            }
-        };
-
-        axios.request(options).then(function(response) {
-            var newpatient = new Patient({
-                patientId: body.patientId,
-                name: body.fname + " " + body.lname,
-                age: body.age,
-                gender: body.gender,
-                prefered_language: body.language,
-                email: body.email,
-                phoneNo: body.phone,
-                emergencyPhoneNo: body.emergencyContact,
-                address: body.address,
-                medicalHistory: body.medicalHistory,
-                familyHistory: body.familyHistory,
-                currentMedication: body.medications,
-                physicianName: body.physicianName,
-                physicianContact: body.physicianContact,
-                bloodGroup: body.bloodGroup,
-                heartRate: body.heartRate,
-                respiratoryRate: body.respiratoryRate,
-                sCr: body.scr,
-                eGFR: body.egfr,
-                HbA1c: body.hba1c,
-                linkedWith: "",
-                hospital: body.hospital,
-                resultCluster: response.data
-            })
-
-            newpatient.save().then((doc) => {
-                pid = doc._id;
-                res.status(200).send({ "msg": "Patient Registered Successfully", pid })
-                return
-            }).catch((e) => {
-                res.status(400).send('Error while saving record')
-                return
-            })
-        }).catch(function(error) {
-            res.status(400).send('Unexpected error occured! Please try again')
-            return
-        });
     } else {
         res.status(400).send('Fields mark with * are important')
         return
@@ -106,94 +129,95 @@ app.post('/register_donor', (req, res, next) => {
                     res.status(400).send('Donor Id already exists. Please try using different id')
                     return
                 }
+                else{
+                    var options = {
+                        method: 'POST',
+                        url: 'http://organdonation.pythonanywhere.com/getDiseaseStatus',
+                        headers: {
+                            Accept: '*/*',
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            bloodCellCount: body.bloodCellCount,
+                            diabetesMillitus: body.diabetesMillitus,
+                            hemoglobin: body.hemoglobin,
+                            pusCell: body.pusCell,
+                            albunimDisorderSeverity: body.albunimDisorderSeverity,
+                            appet: body.appet
+                        }
+                    };
+            
+                    axios.request(options).then(function(response) {
+                        if (response.data == 0) {
+                            var options = {
+                                method: 'POST',
+                                url: 'http://organdonation.pythonanywhere.com/getOrganCluster',
+                                headers: {
+                                    Accept: '*/*',
+                                    'Content-Type': 'application/json'
+                                },
+                                data: {
+                                    scr: body.scr,
+                                    egfr: body.egfr,
+                                    hba1c: body.hba1c
+                                }
+                            };
+            
+                            axios.request(options).then(function(response) {
+                                var newDonor = new Donor({
+                                    donorId: body.donorId,
+                                    name: body.fname + " " + body.lname,
+                                    age: body.age,
+                                    gender: body.gender,
+                                    prefered_language: body.language,
+                                    email: body.email,
+                                    phoneNo: body.phone,
+                                    emergencyPhoneNo: body.emergencyContact,
+                                    address: body.address,
+                                    medicalHistory: body.medicalHistory,
+                                    familyHistory: body.familyHistory,
+                                    currentMedication: body.medications,
+                                    physicianName: body.physicianName,
+                                    physicianContact: body.physicianContact,
+                                    bloodGroup: body.bloodGroup,
+                                    sCr: body.scr,
+                                    eGFR: body.egfr,
+                                    HbA1c: body.hba1c,
+                                    bloodCellCount: body.bloodCellCount,
+                                    diabetesMillitus: body.diabetesMillitus,
+                                    hemoglobin: body.hemoglobin,
+                                    pusCell: body.pusCell,
+                                    albunimDisorderSeverity: body.albunimDisorderSeverity,
+                                    appet: body.appet,
+                                    hospital: body.hospital,
+                                    booked: false,
+                                    resultCluster: response.data
+                                })
+                                newDonor.save().then((doc) => {
+                                    donerId = doc._id;
+                                    res.status(200).send({ "msg": "Donor Registered Successfully", donerId })
+                                    return
+                                }).catch((e) => {
+                                    res.status(400).send('Error while saving record')
+                                    return
+                                })
+                            }).catch(function(error) {
+                                console.error(error);
+                                res.status(400).send('Unexpected error occured! Please try again')
+                                return
+                            });
+                        } else {
+                            res.status(400).send("Disease detected. Sorry, we can't register you as a donor!")
+                            return
+                        }
+                    }).catch(function(error) {
+                        console.error(error);
+                        res.status(400).send('Unexpected error occured! Please try again')
+                        return
+                    });
+                }
             }
         })
-
-        var options = {
-            method: 'POST',
-            url: 'http://organdonation.pythonanywhere.com/getDiseaseStatus',
-            headers: {
-                Accept: '*/*',
-                'Content-Type': 'application/json'
-            },
-            data: {
-                bloodCellCount: body.bloodCellCount,
-                diabetesMillitus: body.diabetesMillitus,
-                hemoglobin: body.hemoglobin,
-                pusCell: body.pusCell,
-                albunimDisorderSeverity: body.albunimDisorderSeverity,
-                appet: body.appet
-            }
-        };
-
-        axios.request(options).then(function(response) {
-            if (response.data == 0) {
-                var options = {
-                    method: 'POST',
-                    url: 'http://organdonation.pythonanywhere.com/getOrganCluster',
-                    headers: {
-                        Accept: '*/*',
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        scr: body.scr,
-                        egfr: body.egfr,
-                        hba1c: body.hba1c
-                    }
-                };
-
-                axios.request(options).then(function(response) {
-                    var newDonor = new Donor({
-                        donorId: body.donorId,
-                        name: body.fname + " " + body.lname,
-                        age: body.age,
-                        gender: body.gender,
-                        prefered_language: body.language,
-                        email: body.email,
-                        phoneNo: body.phone,
-                        emergencyPhoneNo: body.emergencyContact,
-                        address: body.address,
-                        medicalHistory: body.medicalHistory,
-                        familyHistory: body.familyHistory,
-                        currentMedication: body.medications,
-                        physicianName: body.physicianName,
-                        physicianContact: body.physicianContact,
-                        bloodGroup: body.bloodGroup,
-                        sCr: body.scr,
-                        eGFR: body.egfr,
-                        HbA1c: body.hba1c,
-                        bloodCellCount: body.bloodCellCount,
-                        diabetesMillitus: body.diabetesMillitus,
-                        hemoglobin: body.hemoglobin,
-                        pusCell: body.pusCell,
-                        albunimDisorderSeverity: body.albunimDisorderSeverity,
-                        appet: body.appet,
-                        hospital: body.hospital,
-                        booked: false,
-                        resultCluster: response.data
-                    })
-                    newDonor.save().then((doc) => {
-                        donerId = doc._id;
-                        res.status(200).send({ "msg": "Donor Registered Successfully", donerId })
-                        return
-                    }).catch((e) => {
-                        res.status(400).send('Error while saving record')
-                        return
-                    })
-                }).catch(function(error) {
-                    console.error(error);
-                    res.status(400).send('Unexpected error occured! Please try again')
-                    return
-                });
-            } else {
-                res.status(400).send("Disease detected. Sorry, we can't register you as a donor!")
-                return
-            }
-        }).catch(function(error) {
-            console.error(error);
-            res.status(400).send('Unexpected error occured! Please try again')
-            return
-        });
     } else {
         res.status(400).send('Fields mark with * are important')
         return
@@ -218,7 +242,7 @@ app.get('/get_donor_details/:id', async(req, res, next) => {
             console.error(err);
         } else {
             if (document) {
-                res.render('donorDetails', { document });
+                res.render('viewDonorDetails', { document });
                 return
             } else {
                 console.log('Document not found');
@@ -263,7 +287,7 @@ app.get('/get_patient_details/:id', async(req, res, next) => {
                     }).then((availableDonors) =>{
                         if (availableDonors) {
                             document.donorsList = JSON.stringify(availableDonors)
-                            res.render('patientDetails', { document });
+                            res.render('viewPatientDetails', { document });
                             return
                         }
                     })
@@ -275,7 +299,7 @@ app.get('/get_patient_details/:id', async(req, res, next) => {
                             if (document) {
                                 document.linkedWithId = document._id
                                 document.linkedWithUserId = document.donorId
-                                res.render('patientDetails', { document });
+                                res.render('viewPatientDetails', { document });
                                 return
                             } else {
                                 console.log('Document not found');
