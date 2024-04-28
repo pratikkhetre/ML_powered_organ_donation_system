@@ -40,6 +40,73 @@ app.post('/login', async(req, res, next) => {
     })
 })
 
+app.post('/get_dashboard_details', async(req, res, next) => {
+    var finalData = {};
+    Patient.count()
+    .then(patients => {
+        finalData.totalPatients = patients
+        
+        Donor.count()
+        .then(donors => {
+            finalData.totalDonors = donors
+            finalData.currentDataset = finalData.totalPatients + finalData.totalDonors;
+            
+            Patient.count({ linkedWith: { $ne: "" } })
+            .then(paired =>{
+                finalData.paired = paired;
+                
+                Patient.aggregate([
+                    {
+                        $group: {
+                            _id: '$bloodGroup',
+                            count: { $sum: 1 },
+                        }
+                    }
+                ]).then(bloodListPatient =>{
+                    finalData.bloodListPatient = bloodListPatient;
+
+                    Donor.aggregate([
+                        {
+                            $group: {
+                                _id: '$bloodGroup',
+                                count: { $sum: 1 },
+                            }
+                        }
+                    ]).then(bloodListDonor =>{
+                        finalData.bloodListDonor = bloodListDonor;
+
+                        Patient.aggregate([
+                            {
+                                $group: {
+                                    _id: '$gender',
+                                    count: { $sum: 1 },
+                                }
+                            }
+                        ]).then(patientGender =>{
+                            finalData.patientGender = patientGender;
+                            
+                            Donor.aggregate([
+                                {
+                                    $group: {
+                                        _id: '$gender',
+                                        count: { $sum: 1 },
+                                    }
+                                }
+                            ]).then(donorGender =>{
+                                finalData.donorGender = donorGender;
+                                res.status(200).send({finalData})
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
+    .catch(err => {
+        console.error("Error:", err);
+    });
+})
+
 
 app.post('/register_patient', async(req, res, next) => {
     var body = req.body

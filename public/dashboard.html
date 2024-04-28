@@ -1,0 +1,599 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ORGAN DONATION</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+
+   <style>
+    #weatherWidget .currentDesc {
+        color: #ffffff!important;
+    }
+        .traffic-chart {
+            min-height: 335px;
+        }
+        #flotPie1  {
+            height: 150px;
+        }
+        #flotPie1 td {
+            padding:3px;
+        }
+        #flotPie1 table {
+            top: 20px!important;
+            right: -10px!important;
+        }
+        .chart-container {
+            display: table;
+            min-width: 270px ;
+            text-align: left;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #flotLine5  {
+             height: 105px;
+        }
+
+        #flotBarChart {
+            height: 150px;
+        }
+        #cellPaiChart{
+            height: 160px;
+        }
+        .colorlib-loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url(../images/loader.gif) center no-repeat #fff; 
+        }
+    </style>
+
+</head>
+
+<body>
+	<div class="colorlib-loader"></div>
+
+    <!-- Left Panel -->
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="menu-title">Dashboard</li><!-- /.menu-title -->
+                    <li class=" dropdown">
+                        <a href="dashboard.html" class=""  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Dashboard</a>
+                    </li>
+
+                    <li class="menu-title">Patient Options</li><!-- /.menu-title -->
+                    <li class=" dropdown">
+                        <a href="registerPatient.html" class=""  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-wheelchair"></i>Register Patient</a>
+                        <a href="viewPatientList.html" class="dropdown-toggle"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-indent"></i>View Patient List</a>
+                    </li>
+
+                    <li class="menu-title">Donor Options</li><!-- /.menu-title -->
+                    <li class=" dropdown">
+                        <a href="registerDonor.html" class="dropdown-toggle"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-medkit"></i>Register Donor</a>
+                        <a href="viewDonorList.html" class="dropdown-toggle"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-outdent"></i>View Donor List</a>
+                    </li>
+
+                    <li class="menu-title">Completed Records</li><!-- /.menu-title -->
+                    <li class=" dropdown">
+                        <a href="pairedRecords.html" class="dropdown-toggle"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>View Paired Records</a>
+                    </li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside>
+    <!-- /#left-panel -->
+
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img style="height: 40px;" src="images/logo-black.JPG" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="./"><img src="images/logo-black.JPG" alt="Logo"></a>
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                </div>
+            </div>
+        </header>
+        <!-- /#header -->
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="box-title">Model Performance Statistics </h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card-body">
+                                        <div class="stat-widget-four">
+                                            <div class="stat-icon dib">
+                                                <i class="fa fa-tachometer text-muted"></i>
+                                            </div>
+                                            <div class="stat-content">
+                                                <div class="text-left dib">
+                                                    <div class="stat-heading">SVM Accuracy</div>
+                                                    <div class="stat-text">95%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card-body">
+                                        <div class="stat-widget-four">
+                                            <div class="stat-icon dib">
+                                                <i class="fa fa-tachometer text-muted"></i>
+                                            </div>
+                                            <div class="stat-content">
+                                                <div class="text-left dib">
+                                                    <div class="stat-heading">K-means Accuracy</div>
+                                                    <div class="stat-text">98%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card-body">
+                                        <div class="stat-widget-four">
+                                            <div class="stat-icon dib">
+                                                <i class="ti-server text-muted"></i>
+                                            </div>
+                                            <div class="stat-content">
+                                                <div class="text-left dib">
+                                                    <div class="stat-heading">Training Dataset </div>
+                                                    <div class="stat-text">612 Records</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card-body">
+                                        <div class="stat-widget-four">
+                                            <div class="stat-icon dib">
+                                                <i class="fa fa-table text-muted"></i>
+                                            </div>
+                                            <div class="stat-content">
+                                                <div class="text-left dib">
+                                                    <div class="stat-heading">Current Dataset </div>
+                                                    <div class="stat-text" id="currentDataset">0</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widgets  -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-1">
+                                        <i class="fa fa-wheelchair"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span id="totalPatients" class="count">0</span></div>
+                                            <div class="stat-heading">Total Registered Patients</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-1">
+                                        <i class="fa fa-medkit"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span id="totalDonors" class="count">0</span></div>
+                                            <div class="stat-heading">Total Registered Donors</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-1">
+                                        <i class="fa fa-cogs"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span id="totalPaired" class="count">0</span></div>
+                                            <div class="stat-heading">Total Paired Records</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Widgets -->
+            
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="box-title">Users Statistics </h4>
+                            </div>
+                            <div class="card-header">
+                                <span class="card-title">Patients Differed by Blood Groups</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card-group">
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodAPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">A+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodA-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">A-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-2" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodBPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">B+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodB-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">B-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-4" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodABPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">AB+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-5" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodAB-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">AB-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodOPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">O+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="pBloodO-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">O-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header">
+                                <span class="card-title">Donor Differed by Blood Groups</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card-group">
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodAPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">A+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodA-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">A-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-2" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodBPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">B+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodB-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">B-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-4" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodABPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">AB+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-5" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodAB-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">AB-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodOPlus" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">O+</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card col-md-6 no-padding ">
+                                            <div class="card-body">
+                                                <div class="h4 mb-0">
+                                                    <span id="dBloodO-" class="count">0</span>
+                                                </div>
+                                                <small class="text-muted text-uppercase font-weight-bold">O-</small>
+                                                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="box-title">Gender Statistics </h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card-header">
+                                        <span class="card-title">Patients Differed by Gender</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="card-body">
+                                                <div class="stat-widget-one">
+                                                    <div class="stat-icon dib"><i class="fa fa-male text-primary border-primary"></i></div>
+                                                    <div class="stat-content dib">
+                                                        <div class="stat-text">Male</div>
+                                                        <div id="pMale" class="stat-digit">0</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-2">
+                                            <div class="card-body">
+                                                <div class="stat-widget-one">
+                                                    <div class="stat-icon dib"><i class="fa fa-female text-primary border-primary"></i></div>
+                                                    <div class="stat-content dib">
+                                                        <div class="stat-text">Female</div>
+                                                        <div id="pFemale" class="stat-digit">0</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card-header">
+                                        <span class="card-title">Donors Differed by Gender</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                                <div class="card-body">
+                                                    <div class="stat-widget-one">
+                                                    <div class="stat-icon dib"><i class="fa fa-male text-primary border-primary"></i></div>
+                                                    <div class="stat-content dib">
+                                                        <div class="stat-text">Male</div>
+                                                        <div id="dMale" class="stat-digit">0</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="card-body">
+                                                <div class="stat-widget-one">
+                                                    <div class="stat-icon dib"><i class="fa fa-female text-primary border-primary"></i></div>
+                                                    <div class="stat-content dib">
+                                                        <div class="stat-text">Female</div>
+                                                        <div id="dFemale" class="stat-digit">0</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+    </div>
+    <!-- /#right-panel -->
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+	<script src="assets/js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="assets/js/jquery.easing.1.3.js"></script>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <!-- <script src="assets/js/main.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+
+    <script defer>	
+        $(".colorlib-loader").css("display", "block");
+        $.ajax({
+            method: "POST",
+            url: '/get_dashboard_details',
+            success: function(data){
+                $("#currentDataset").text(`${data.finalData.currentDataset} Records`)
+                $("#totalPatients").text(data.finalData.totalPatients)
+                $("#totalDonors").text(data.finalData.totalDonors)
+                $("#totalPaired").text(data.finalData.paired)
+                
+                var newBloodListPatient = {};
+                data.finalData.bloodListPatient.forEach(item => {
+                    newBloodListPatient[item._id] = item.count;
+                });
+                
+                $("#pBloodAPlus").text(newBloodListPatient['A+'])
+                $("#pBloodA-").text(newBloodListPatient['A-'])
+                $("#pBloodBPlus").text(newBloodListPatient['B+'])
+                $("#pBloodB-").text(newBloodListPatient['B-'])
+                $("#pBloodABPlus").text(newBloodListPatient['AB+'])
+                $("#pBloodAB-").text(newBloodListPatient['AB-'])
+                $("#pBloodOPlus").text(newBloodListPatient['O+'])
+                $("#pBloodO-").text(newBloodListPatient['O-'])
+               
+                var newBloodListDonor = {};
+                data.finalData.bloodListDonor.forEach(item => {
+                    newBloodListDonor[item._id] = item.count;
+                });
+                
+                $("#dBloodAPlus").text(newBloodListDonor['A+'])
+                $("#dBloodA-").text(newBloodListDonor['A-'])
+                $("#dBloodBPlus").text(newBloodListDonor['B+'])
+                $("#dBloodB-").text(newBloodListDonor['B-'])
+                $("#dBloodABPlus").text(newBloodListDonor['AB+'])
+                $("#dBloodAB-").text(newBloodListDonor['AB-'])
+                $("#dBloodOPlus").text(newBloodListDonor['O+'])
+                $("#dBloodO-").text(newBloodListDonor['O-'])
+
+                var newPatientGender = {};
+                data.finalData.patientGender.forEach(item => {
+                    newPatientGender[item._id] = item.count;
+                });
+                
+                $("#pMale").text(newPatientGender['Male'])
+                $("#pFemale").text(newPatientGender['Female'])
+            
+                var newDonorGender = {};
+                data.finalData.donorGender.forEach(item => {
+                    newDonorGender[item._id] = item.count;
+                });
+                
+                $("#dMale").text(newDonorGender['Male'])
+                $("#dFemale").text(newDonorGender['Female'])
+            
+
+                $(".colorlib-loader").css("display", "none");
+                // Counter Number
+                $('.count').each(function () {
+                    $(this).prop('Counter',0).animate({
+                        Counter: $(this).text()
+                    }, {
+                        duration: 3000,
+                        easing: 'swing',
+                        step: function (now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                });
+            },
+            error: function(e){
+                $(".colorlib-loader").css("display", "none");
+            }
+		})
+    </script>
+</body>
+</html>
